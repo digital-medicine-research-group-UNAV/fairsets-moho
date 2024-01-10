@@ -1,0 +1,59 @@
+# Experiment
+dataset: "adult_numenc" # adult_numenc diabetes compas 
+classifier: "rf" # logit tree rf
+label: "income" # income readmitted two_year_recid
+
+# Settings
+generations: 200
+individuals: 50
+sensitive_attribute: "gender" 
+eff_obj: "set_size"
+fair_obj: "avg_priv_dif"
+sensitive_groups: "bin"
+priv_value: null
+conf: 0.9
+cal_size: 0.2
+set_seed: 100
+n_runs: 10
+expand: True
+
+# Hyperparameters lists
+logit_hyps: ['max_iter','tol', 'C', 'l1_ratio']
+tree_hyps: ['criterion', 'max_depth', 'min_samples_split', 'max_leaf_nodes']
+rf_hyps: ['n_estimators', 'max_features', 'max_samples', 'criterion', 'max_depth', 'min_samples_split', 'max_leaf_nodes']
+
+# Initial hyperparameters
+initial_logit:
+    first: [100, 0.0001, 1, 0, null]
+    second: [100, 0.0001, 1, 1, null]
+
+initial_tree:
+    first: [0, null, 2, null, 1]
+    second: [1, null, 2, null, 1]
+
+initial_rf:
+    first: [10, 0.3, 0.3, 0, null, 2, null, 1]
+    second: [300, 0.9, 0.9, 1, null, 2, null, 1]
+
+# Hyperparameters space
+logit_space:
+    max_iter: [20, 200]
+    tolerance: [0.0001, 0.1]
+    C: [0.001, 100000]
+    l1_ratio: [0, 1]
+
+
+tree_space:
+    criterion: [0, 1]
+    max_depth: [2, null]
+    min_samples_split: [2, null]
+    max_leaf_nodes: [2, null]
+
+rf_space:
+    n_estimators: [10, 300]
+    max_features: [0.1, 1]
+    max_samples: [0, 1]
+    criterion: [0, 1]
+    max_depth: [2, null]
+    min_samples_split: [2, null]
+    max_leaf_nodes: [2, null]
